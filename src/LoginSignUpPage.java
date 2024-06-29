@@ -147,7 +147,7 @@ import java.util.Objects;
             } else {
                 showInfoDialog(frame, loginResult);
                 frame.dispose();
-                //new RoomsPage().createAndShowGUI(usernameSTR);
+                new RoomsPage().createAndShowGUI(usernameSTR);
             }
         }
     }

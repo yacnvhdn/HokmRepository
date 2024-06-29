@@ -22,17 +22,12 @@ import java.util.Objects;
             gbc.insets = new Insets(10, 10, 10, 10);
 
             JLabel imageLabel = new JLabel();
-            try
-            {
+            try {
                 ImageIcon imageIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/data/HOKM3.png")));
                 imageLabel.setIcon(imageIcon);
-            }
-            catch (NullPointerException e)
-            {
+            } catch (NullPointerException e) {
                 JOptionPane.showMessageDialog(frame, "Image not found: /data/HOKM3.png", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 JOptionPane.showMessageDialog(frame, "Unexpected error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
             gbc.gridx = 0;
@@ -75,6 +70,9 @@ import java.util.Objects;
             addMouseListener(signUpButton, Color.decode("#ed0000"), Color.red);
             addMouseListener(loginButton, Color.decode("#262626"), Color.black);
 
+            signUpButton.addActionListener(e -> handleSignUp(username.getText(), password.getText(), frame));
+            loginButton.addActionListener(e -> handleLogin(username.getText(), password.getText(), frame));
+
 
             frame.setVisible(true);
         }
@@ -114,5 +112,42 @@ import java.util.Objects;
         private void showInfoDialog(JFrame frame, String message)
         {
             JOptionPane.showMessageDialog(frame, message, "Information", JOptionPane.INFORMATION_MESSAGE);
+        }
+
+        private void handleSignUp(String usernameSTR, String passwordSTR, JFrame frame)
+        {
+            if (usernameSTR.isEmpty() || passwordSTR.isEmpty())
+            {
+                showErrorDialog(frame, "You have not entered the " + (usernameSTR.isEmpty() ? "username" : "password") + "!");
+                return;
+            }
+            Users usersObj = new Users();
+            String registrationResult = usersObj.registerUser(usernameSTR, passwordSTR);
+            if (Objects.equals(registrationResult, "This username is taken!"))
+            {
+                showErrorDialog(frame, "This username is taken!");
+            }
+            else
+            {
+                showInfoDialog(frame, "Registration successful:) now login");
+            }
+        }
+
+        private void handleLogin(String usernameSTR, String passwordSTR, JFrame frame)
+        {
+            if (usernameSTR.isEmpty() || passwordSTR.isEmpty())
+            {
+                showErrorDialog(frame, "You have not entered the " + (usernameSTR.isEmpty() ? "username" : "password") + "!");
+                return;
+            }
+            Users usersObj = new Users();
+            String loginResult = usersObj.loginUser(usernameSTR, passwordSTR);
+            if (Objects.equals(loginResult, "username or password is incorrect!")) {
+                showErrorDialog(frame, "username or password is incorrect!");
+            } else {
+                showInfoDialog(frame, loginResult);
+                frame.dispose();
+                //new RoomsPage().createAndShowGUI(usernameSTR);
+            }
         }
     }

@@ -219,8 +219,8 @@ public class RoomsPage {
             JLabel playerImageLabel = new JLabel();
             ImageIcon playerIcon = (i < players.size() && room.getCreator() != null)
                     ? new
-                    ImageIcon(Objects.requireNonNull(getClass().getResource("/assets/boy.png")))
-                    : new ImageIcon(Objects.requireNonNull(getClass().getResource("/assets/nullPlayer.png")));
+                    ImageIcon(Objects.requireNonNull(getClass().getResource("/data/boy.png")))
+                    : new ImageIcon(Objects.requireNonNull(getClass().getResource("/data/nullPlayer.png")));
 
             playerImageLabel.setIcon(playerIcon);
             panel.add(playerImageLabel, gbc);
